@@ -25,6 +25,7 @@ export const GET = (async () => {
       title: post.data.title,
       link: `https://tfrkd.org/log/${post.id}`,
       date: new Date(postDate(post)),
+      // Astro's render(post) returns a component, not the HTML string required by feed.
       content: marked.parse(post.body ?? "", { async: false }),
     });
   });
