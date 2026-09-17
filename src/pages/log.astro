@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getSortedPosts, postDate, formatDate } from "../lib/log";
+
+const posts = await getSortedPosts();
+---
+
+<Layout title="log - 49.212.143.129">
+  <link
+    slot="head"
+    href="/log/feed.atom"
+    rel="alternate"
+    title="log - 49.212.143.129"
+    type="application/atom+xml"
+  />
+
+  <header>
+    <h1>Log ({posts.length})</h1>
+  </header>
+
+  <ul>
+    {posts.map((post) => (
+      <li>
+        <a href={`/log/${post.id}`}>{post.data.title}</a> -{" "}
+        <time datetime={postDate(post)}>{formatDate(post)}</time>
+      </li>
+    ))}
+  </ul>
+</Layout>

@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { postDate, formatDate } from "../../lib/log";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("log");
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} | 49.212.143.129`}>
+  <article>
+    <header>
+      <h1>{post.data.title}</h1>
+    </header>
+    <time datetime={postDate(post)}>{formatDate(post)}</time>
+    <section class="content">
+      <Content />
+    </section>
+  </article>
+</Layout>
